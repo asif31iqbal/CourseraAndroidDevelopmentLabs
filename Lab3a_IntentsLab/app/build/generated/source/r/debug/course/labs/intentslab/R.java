@@ -32,8 +32,9 @@ public final class R {
         public static final int explicit_message=0x7f040004;
         public static final int implicit_activation_button_string=0x7f040005;
         public static final int no_text_entered=0x7f040006;
-        public static final int title_explicit=0x7f040007;
-        public static final int title_main=0x7f040008;
+        public static final int title_chooser=0x7f040007;
+        public static final int title_explicit=0x7f040008;
+        public static final int title_main=0x7f040009;
     }
     public static final class style {
         /** 

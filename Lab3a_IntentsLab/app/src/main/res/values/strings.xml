@@ -10,5 +10,6 @@
     <string name="no_text_entered">No Text Entered</string>
     <string name="enter_string">Enter</string>
     <string name="enter_text_here_string">Enter Text Here</string>
+    <string name="title_chooser">Load http://www.google.com with</string>
 
 </resources>

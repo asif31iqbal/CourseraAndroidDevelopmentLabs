@@ -1,0 +1,31 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 18
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "course.labs.fragmentslab"
+        minSdkVersion 13
+        targetSdkVersion 18
+
+        testApplicationId "course.labs.fragmentslab.test"
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    sourceSets {
+        main {
+            res.srcDirs = ['src/main/res', 'src/main/res/layout-sw600dp', 'src/main/res/drawble-sw400dp']
+        }
+    }
+}
+
+dependencies {
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.3.1'
+}

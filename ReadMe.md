@@ -9,3 +9,6 @@ Coursera Android Development - Programming Mobile Applications for Android Handh
 
 ## Permissions Lab
 - Filled in the code for bookmarks and dangerous activity invocation with permissions. (All tests passed)
+
+## Fragments Lab
+- Filled in the code for dynamically deciding whether to use 2-pane layout or single pane layout using fragments. (All tests passed)

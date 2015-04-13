@@ -15,7 +15,14 @@ public class FeedFragment extends Fragment {
 	private TextView mTextView;
 	private static FeedFragmentData feedFragmentData;
 
-	@Override
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setRetainInstance(true);
+    }
+
+    @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 

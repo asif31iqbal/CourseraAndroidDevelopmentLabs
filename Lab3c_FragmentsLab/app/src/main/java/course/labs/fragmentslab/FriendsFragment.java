@@ -15,6 +15,8 @@ public class FriendsFragment extends ListFragment {
 			"taylorswift13" };
 	private static final String TAG = "Lab-Fragments";
 
+    private int mCurrIndex = -1;
+
 	public interface SelectionListener {
 		public void onItemSelected(int position);
 	}
@@ -33,6 +35,8 @@ public class FriendsFragment extends ListFragment {
 
 		// Set the list adapter for this ListFragment
 		setListAdapter(new ArrayAdapter<String>(getActivity(), layout, FRIENDS));
+
+        setRetainInstance(true);
 	}
 
 		
@@ -77,6 +81,11 @@ public class FriendsFragment extends ListFragment {
 
 		}
 
+        if(mCurrIndex != -1){
+            getListView().setItemChecked(mCurrIndex, true);
+            getListView().performItemClick(getListView(), mCurrIndex, getListView().getItemIdAtPosition(mCurrIndex));
+        }
+
 	}
 
 	@Override
@@ -84,8 +93,10 @@ public class FriendsFragment extends ListFragment {
 
 		// Notify the hosting Activity that a selection has been made.
 
-		mCallback.onItemSelected(position);
+        mCurrIndex = position;
+        mCallback.onItemSelected(position);
 
+        l.setItemChecked(mCurrIndex, true);
 	}
 
 	// If there is a FeedFragment, then the layout is two-pane 

@@ -13,3 +13,6 @@ Coursera Android Development - Programming Mobile Applications for Android Handh
 ## Fragments Lab
 - Filled in the code for dynamically deciding whether to use 2-pane layout or single pane layout using fragments. (All tests passed)
 - Added the necessary code so that the application maintains its state (which Friend and/or Feed is selected) after a reconfiguration
+
+## UI Labs
+- Filled in the code for creating a simple application that uses a variety of UI elements including: Buttons, TextViews and Checkboxes. (All tests passed)

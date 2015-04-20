@@ -1,13 +1,18 @@
 package course.labs.todomanager;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,12 +22,23 @@ public class ToDoListAdapter extends BaseAdapter {
 
 	private final List<ToDoItem> mItems = new ArrayList<ToDoItem>();
 	private final Context mContext;
+    private final List<PriorityListItem> mpriorityList;
+    private final Resources mResources;
 
 	private static final String TAG = "Lab-UserInterface";
 
 	public ToDoListAdapter(Context context) {
 
 		mContext = context;
+        mResources = mContext.getResources();
+
+        mpriorityList = new ArrayList<PriorityListItem>();
+        PriorityListItem item = new PriorityListItem(ToDoItem.Priority.HIGH, mResources.getString(R.string.priority_high_string));
+        mpriorityList.add(item);
+        item = new PriorityListItem(ToDoItem.Priority.MED, mResources.getString(R.string.priority_medium_string));
+        mpriorityList.add(item);
+        item = new PriorityListItem(ToDoItem.Priority.LOW, mResources.getString(R.string.priority_low_string));
+        mpriorityList.add(item);
 	}
 
 	// Add a ToDoItem to the adapter
@@ -94,13 +110,16 @@ public class ToDoListAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.titleView = (TextView) convertView.findViewById(R.id.titleView);
             holder.statusView = (CheckBox) convertView.findViewById(R.id.statusCheckBox);
-            holder.priorityView = (TextView) convertView.findViewById(R.id.priorityView);
+            //holder.priorityView = (TextView) convertView.findViewById(R.id.priorityView);
             holder.dateView = (TextView) convertView.findViewById(R.id.dateView);
+            holder.prioritySelector = (Spinner) convertView.findViewById(R.id.prioritySelector);
             convertView.setTag(holder);
         }
         else {
             holder = (ViewHolder) convertView.getTag();
         }
+
+        final View tempView = convertView;
 
 		// Fill in specific ToDoItem data
 		// Remember that the data that goes in this View
@@ -114,8 +133,9 @@ public class ToDoListAdapter extends BaseAdapter {
 
 		// Set up Status CheckBox
 		final CheckBox statusView = holder.statusView;
+        boolean done = toDoItem.getStatus() == ToDoItem.Status.DONE;
         statusView.setChecked(toDoItem.getStatus() == ToDoItem.Status.DONE ? true : false);
-
+        setItemColor(tempView, statusView);
 
 		// Must also set up an OnCheckedChangeListener,
 		// which is called when the user toggles the status checkbox
@@ -124,23 +144,45 @@ public class ToDoListAdapter extends BaseAdapter {
 					@Override
 					public void onCheckedChanged(CompoundButton buttonView,
 							boolean isChecked) {
-                            toDoItem.setStatus(isChecked ? ToDoItem.Status.DONE : ToDoItem.Status.NOTDONE);
+                        toDoItem.setStatus(isChecked ? ToDoItem.Status.DONE : ToDoItem.Status.NOTDONE);
+                        setItemColor(tempView, statusView);
 					}
 				});
 
+
 		// Display Priority in a TextView
-		final TextView priorityView = holder.priorityView;
+		//final TextView priorityView = holder.priorityView;
+
+        final Spinner spinner = holder.prioritySelector;
+        ArrayAdapter<PriorityListItem> adapter =
+                new ArrayAdapter<PriorityListItem>(mContext, R.layout.spinner_item, mpriorityList);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> adapterView, android.view.View view, int i, long l) {
+                PriorityListItem priority = (PriorityListItem)adapterView.getItemAtPosition(i);
+                toDoItem.setPriority(priority.code);
+            }
+
+            @Override
+            public void onNothingSelected(android.widget.AdapterView<?> adapterView) {
+
+            }
+        });
+
         switch(toDoItem.getPriority()){
             case HIGH:
-                priorityView.setText(mContext.getString(R.string.priority_high_string));
+                spinner.setSelection(0);
                 break;
             case LOW:
-                priorityView.setText(mContext.getString(R.string.priority_low_string));
+                spinner.setSelection(2);
                 break;
             default:
-                priorityView.setText(mContext.getString(R.string.priority_medium_string));
+                spinner.setSelection(1);
                 break;
         }
+
 
 		// Display Time and Date.
 		// Hint - use ToDoItem.FORMAT.format(toDoItem.getDate()) to get date and
@@ -153,10 +195,30 @@ public class ToDoListAdapter extends BaseAdapter {
 
 	}
 
+    private final void setItemColor(View view, CheckBox statusView){
+        view.setBackgroundColor(statusView.isChecked() ? mContext.getResources().getColor(R.color.green) : mContext.getResources().getColor(R.color.red));
+        statusView.setBackgroundColor(mContext.getResources().getColor(R.color.black));
+    }
+
     static class ViewHolder{
         TextView titleView;
         CheckBox statusView;
-        TextView priorityView;
         TextView dateView;
+        Spinner prioritySelector;
+    }
+
+    static class PriorityListItem{
+        ToDoItem.Priority code;
+        String name;
+
+        public PriorityListItem(ToDoItem.Priority code, String name){
+            this.code = code;
+            this.name = name;
+        }
+
+        @Override
+        public String toString(){
+            return name;
+        }
     }
 }

@@ -2,6 +2,20 @@
 <resources>
     <!-- From: file:/Users/asifiqbal/Development/AndroidStudioProjects/Lab4_UILabs/app/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string-array name="priority_array">
+        <item>High</item>
+        <item>Medium</item>
+        <item>Low</item>
+    </string-array>
+    <!-- From: file:/Users/asifiqbal/Development/AndroidStudioProjects/Lab4_UILabs/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="black">#FF000000</color>
+    <color name="blue">#FF0000FF</color>
+    <color name="green">#FF00FFAA</color>
+    <color name="red">#FFFF0055</color>
+    <color name="white">#FFFFFFFF</color>
+    <!-- From: file:/Users/asifiqbal/Development/AndroidStudioProjects/Lab4_UILabs/app/src/main/res/values/strings.xml -->
+    <eat-comment/>
     <string name="add_new_todo_item_string">Add New ToDo Item</string>
     <string name="app_name">UILabs</string>
     <string name="cancel_string">Cancel</string>

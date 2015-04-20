@@ -16,3 +16,5 @@ Coursera Android Development - Programming Mobile Applications for Android Handh
 
 ## UI Labs
 - Filled in the code for creating a simple application that uses a variety of UI elements including: Buttons, TextViews and Checkboxes. (All tests passed)
+- Added background colors for Todo items - Red for not done and green for done.
+- Replaced the Priority TextView with a drop down (spinner) so that user can change the priority of an existing Todo item.
